@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MusicBot">
+    <output-path>$PROJECT_DIR$/../Export</output-path>
+    <root id="archive" name="MusicBot.jar">
+      <element id="module-output" name="MusicBot" />
+    </root>
+  </artifact>
+</component>
