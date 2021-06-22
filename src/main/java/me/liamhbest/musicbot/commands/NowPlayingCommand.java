@@ -46,19 +46,9 @@ public class NowPlayingCommand extends ListenerAdapter {
     public static String getProgressBar(AudioTrack track) {
         float percentage = (100f / track.getDuration() * track.getPosition());
         return "[" + repeat("▬", (int) Math.round((double) percentage / 10)) +
-                "](https://github.com/FlareBot)" +
+                "](https://github.com/LiamHBest0608)" +
                 repeat("▬", 10 - (int) Math.round((double) percentage / 10));
     }
-
-    /*
-    public static String getProgressBar(AudioTrack track) {
-        float percentage = (100f / track.getDuration() * track.getPosition());
-        return "[" + repeat("▬", (int) Math.round((double) percentage / 10)) +
-                "](https://github.com/FlareBot)" +
-                repeat("▬", 10 - (int) Math.round((double) percentage / 10)) +
-                " " + GeneralUtils.percentageFormat.format(percentage) + "%";
-    }
-     */
 
     public static String repeat(String input, int times){
         StringBuilder output = new StringBuilder();
@@ -71,7 +61,7 @@ public class NowPlayingCommand extends ListenerAdapter {
     }
 
     public static String getTimer(){
-        // 02:44/05:09
+        // 00:44/05:09
 
         long positionSeconds = ((PlayCommand.widePlayer.getPlayingTrack().getPosition()/1000)/60);
         long positionMinute = ((PlayCommand.widePlayer.getPlayingTrack().getPosition()/1000)%60);
@@ -79,7 +69,7 @@ public class NowPlayingCommand extends ListenerAdapter {
         long durationSeconds = ((PlayCommand.widePlayer.getPlayingTrack().getDuration()/1000)/60);
         long durationMinute = ((PlayCommand.widePlayer.getPlayingTrack().getDuration()/1000)%60);
         
-        String output = positionMinute + ":" + positionSeconds + "/" + durationMinute + ":" + durationSeconds;
+        String output = positionSeconds + ":" + positionMinute + "/" + durationSeconds + ":" + durationMinute;
 
         return output;
     }

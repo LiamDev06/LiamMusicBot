@@ -7,14 +7,10 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import java.io.*;
-
 public class LiamMusicBot {
 
-    private static LiamMusicBot INSTANCE;
-
     public static JDA jda;
-    private static final String token = "ODU1NzYyNzQxMjg1NzQ4NzQ2.YM3NKA.wfw4rMY6JcLcrsoHQFuZqbWbhnE";
+    private static final String token = System.getenv("MUSIC_BOT_TOKEN");
 
     public static void main(String[] args) {
 
@@ -29,9 +25,9 @@ public class LiamMusicBot {
             exception.printStackTrace();
         }
 
-        System.out.println("The bot has now been loaded and is active.");
-
         registerDiscordListeners();
+
+        System.out.println("The bot has now been loaded and is active.");
     }
 
     public static void registerDiscordListeners(){
@@ -45,6 +41,7 @@ public class LiamMusicBot {
         jda.addEventListener(new ResumeCommand());
         jda.addEventListener(new QueueAddCommand());
         jda.addEventListener(new QueueCommand());
+        jda.addEventListener(new MusicHelpCommand());
     }
 
 }

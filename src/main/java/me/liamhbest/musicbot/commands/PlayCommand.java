@@ -71,7 +71,6 @@ public class PlayCommand extends ListenerAdapter {
             event.getChannel().sendMessage(embed.build()).queue();
             event.getGuild().getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 
-
             playerManager.loadItem(args[1]+"=0", new AudioLoadResultHandler() {
                 @Override
                 public void trackLoaded(AudioTrack track) {
@@ -83,9 +82,12 @@ public class PlayCommand extends ListenerAdapter {
                     boolean firstTime = false;
 
                     for (AudioTrack track : playlist.getTracks()) {
-                        
-
-                        TrackScheduler.queue.add(track);
+                        if (!firstTime){
+                            firstTime = true;
+                            TrackScheduler.play(track, event.getChannel());
+                        } else {
+                            TrackScheduler.queue.add(track);
+                        }
                     }
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(Color.MAGENTA);
