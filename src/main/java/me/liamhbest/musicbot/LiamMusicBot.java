@@ -42,6 +42,8 @@ public class LiamMusicBot {
         jda.addEventListener(new QueueAddCommand());
         jda.addEventListener(new QueueCommand());
         jda.addEventListener(new MusicHelpCommand());
+        jda.addEventListener(new ForwardCommand());
+        jda.addEventListener(new RewindCommand());
     }
 
 }

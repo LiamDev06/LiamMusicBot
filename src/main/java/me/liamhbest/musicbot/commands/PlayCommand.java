@@ -7,9 +7,13 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeSearchMusicProvider;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeSearchProvider;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import com.sedmelluq.discord.lavaplayer.track.AudioItem;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import me.liamhbest.musicbot.utility.Utils;
 import me.liamhbest.musicbot.utility.lavaplayer.AudioPlayerSendHandler;
 import me.liamhbest.musicbot.utility.lavaplayer.TrackScheduler;
@@ -19,6 +23,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.sound.sampled.AudioInputStream;
 import java.awt.*;
+import java.util.function.Function;
 
 public class PlayCommand extends ListenerAdapter {
 
@@ -71,7 +76,19 @@ public class PlayCommand extends ListenerAdapter {
             event.getChannel().sendMessage(embed.build()).queue();
             event.getGuild().getAudioManager().setSendingHandler(new AudioPlayerSendHandler(player));
 
-            playerManager.loadItem(args[1]+"=0", new AudioLoadResultHandler() {
+            String identifier = args[1];
+
+            if (!identifier.contains("youtube.com")) {
+                // Create search from this
+                YoutubeSearchProvider youtubeSearchProvider = new YoutubeSearchProvider();
+
+                Function<AudioTrackInfo, AudioTrack> trackFunction = audioTrackInfo -> null;
+                AudioTrack audioTrack = (AudioTrack) youtubeSearchProvider.loadSearchResult(identifier, trackFunction);
+            } else {
+                identifier = identifier+"=0";
+            }
+
+            playerManager.loadItem(identifier, new AudioLoadResultHandler() {
                 @Override
                 public void trackLoaded(AudioTrack track) {
                     trackScheduler.play(track, event.getChannel());

@@ -32,6 +32,8 @@ public class MusicHelpCommand extends ListenerAdapter {
             embed.appendDescription("**!resume** - resume a paused song"+newLine);
             embed.appendDescription("**!volume** - view current volume"+newLine);
             embed.appendDescription("**!volume [value]** - set the music volume"+newLine);
+            embed.appendDescription("**!forward [value][s/m]** - go forward in the song"+newLine);
+            embed.appendDescription("**!rewind [value][s/m]** - rewind in the song"+newLine);
             embed.appendDescription("**!play [link]** - abort what's currently playing and play what you want"+newLine);
             embed.appendDescription("**!skip** - skips current song and moves on to next one if there's more songs in the queue"+newLine);
             embed.appendDescription("**!stop** - stop all music and make the bot leave"+newLine);
