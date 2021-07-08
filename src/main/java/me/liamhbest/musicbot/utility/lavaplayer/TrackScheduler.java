@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import me.liamhbest.musicbot.LiamMusicBot;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -55,7 +56,12 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
         embed.setColor(Color.GREEN);
         embed.setTitle(":loud_sound: Now Playing");
         embed.appendDescription(track.getInfo().title + " - " + track.getInfo().author);
-        channel.sendMessage(embed.build()).queue();
+
+        if (LiamMusicBot.announcementChannel == null){
+            channel.sendMessage(embed.build()).queue();
+            return;
+        }
+        LiamMusicBot.announcementChannel.sendMessage(embed.build()).queue();
     }
 
     @Override

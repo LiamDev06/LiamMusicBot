@@ -65,7 +65,7 @@ public class ForwardCommand extends ListenerAdapter {
             if (forwardAmountInLong < playingTrack.getDuration()) {
                 int args1Amount = args[1].length();
                 char sOrM = args[1].charAt(args1Amount-1);
-
+    
                 if (sOrM == 's') {
                     //Set seconds
                     forwardAmountInLong *= 100 * 7.7;

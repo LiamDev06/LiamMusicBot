@@ -4,6 +4,7 @@ import me.liamhbest.musicbot.commands.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
@@ -11,6 +12,7 @@ public class LiamMusicBot {
 
     public static JDA jda;
     private static final String token = System.getenv("MUSIC_BOT_TOKEN");
+    public static TextChannel announcementChannel = null;
 
     public static void main(String[] args) {
 
@@ -44,6 +46,7 @@ public class LiamMusicBot {
         jda.addEventListener(new MusicHelpCommand());
         jda.addEventListener(new ForwardCommand());
         jda.addEventListener(new RewindCommand());
+        jda.addEventListener(new AnnounceChannelCommand());
     }
 
 }
