@@ -16,6 +16,8 @@ public class RewindCommand extends ListenerAdapter {
         String[] args = event.getMessage().getContentRaw().split(" ");
 
         if (args[0].equalsIgnoreCase(command) && !event.getAuthor().isBot()) {
+            if (!Utils.hasMusicBotPermission(event.getMember())) return;
+
             if (!Utils.botInVoiceChannel(event)) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.RED);
@@ -49,10 +51,10 @@ public class RewindCommand extends ListenerAdapter {
             }
 
             AudioTrack playingTrack = PlayCommand.widePlayer.getPlayingTrack();
-            long forwardAmountInLong;
+            long rewindAmountInLong;
 
             try {
-                forwardAmountInLong = Long.parseLong(args[1].replace("s", "").replace("m", ""));
+                rewindAmountInLong = Long.parseLong(args[1].replace("s", "").replace("m", ""));
             } catch (Exception exception){
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.RED);
@@ -62,16 +64,28 @@ public class RewindCommand extends ListenerAdapter {
                 return;
             }
 
-            if (forwardAmountInLong < 0) {
+            if (rewindAmountInLong < playingTrack.getPosition()) {
                 int args1Amount = args[1].length();
                 char sOrM = args[1].charAt(args1Amount-1);
 
                 if (sOrM == 's') {
                     //Set seconds
-                    event.getChannel().sendMessage("**Testing:** Rewind in seconds").queue();
+                    rewindAmountInLong *= 100 * 7.9;
+                    playingTrack.setPosition(playingTrack.getPosition() - rewindAmountInLong);
+
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(Color.MAGENTA);
+                    embed.appendDescription("Rewinded " + args[1] + " in the current song.");
+                    event.getChannel().sendMessage(embed.build()).queue();
                 } else if (sOrM == 'm') {
                     //Set minute
-                    event.getChannel().sendMessage("**Testing:** Rewind in minutes").queue();
+                    rewindAmountInLong *= (100 * 9) * 60;
+                    playingTrack.setPosition(playingTrack.getPosition() - rewindAmountInLong);
+
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(Color.MAGENTA);
+                    embed.appendDescription("Rewinded " + args[1] + " in the current song.");
+                    event.getChannel().sendMessage(embed.build()).queue();
                 } else {
                     //Error, you can only set minute and second
                     EmbedBuilder embed = new EmbedBuilder();

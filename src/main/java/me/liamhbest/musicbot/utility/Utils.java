@@ -27,7 +27,8 @@ public class Utils {
     }
 
     public static boolean hasMusicBotPermission(Member member){
-        return hasRole(member, "Music Bot Access");
+        return hasRole(member, "Music Bot Access")
+                || member.getId().equalsIgnoreCase("392381841639997451");
     }
 
 

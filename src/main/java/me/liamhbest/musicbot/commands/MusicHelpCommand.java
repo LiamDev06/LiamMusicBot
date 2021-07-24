@@ -28,6 +28,7 @@ public class MusicHelpCommand extends ListenerAdapter {
             embed.appendDescription("**!queue** - view the current queue"+newLine);
             embed.appendDescription("**!queueadd** - add a song to the queue (you can add entire YT playlists)"+newLine);
             embed.appendDescription("**!np/nowplaying** - view the song that's currently playing"+newLine);
+            embed.appendDescription("**!setannouncechannel** - sets the channel where song will be announced"+newLine);
             embed.appendDescription("**!pause** - pause current song"+newLine);
             embed.appendDescription("**!resume** - resume a paused song"+newLine);
             embed.appendDescription("**!volume** - view current volume"+newLine);

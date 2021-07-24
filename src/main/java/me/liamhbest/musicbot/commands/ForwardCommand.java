@@ -16,6 +16,8 @@ public class ForwardCommand extends ListenerAdapter {
         String[] args = event.getMessage().getContentRaw().split(" ");
 
         if (args[0].equalsIgnoreCase(command) && !event.getAuthor().isBot()) {
+            if (!Utils.hasMusicBotPermission(event.getMember())) return;
+
             if (!Utils.botInVoiceChannel(event)) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.RED);
@@ -71,11 +73,21 @@ public class ForwardCommand extends ListenerAdapter {
                     forwardAmountInLong *= 100 * 7.7;
                     playingTrack.setPosition(playingTrack.getPosition() + forwardAmountInLong);
 
-                    event.getChannel().sendMessage("**Testing:** Forward in seconds").queue();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(Color.MAGENTA);
+                    embed.appendDescription("Forwarded " + args[1] + " in the current song.");
+                    event.getChannel().sendMessage(embed.build()).queue();
 
                 } else if (sOrM == 'm') {
                     //Set minute
-                    event.getChannel().sendMessage("**Testing:** Forward in minutes").queue();
+                    forwardAmountInLong *= (100 * 9) * 60;
+                    playingTrack.setPosition(playingTrack.getPosition() + forwardAmountInLong);
+
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(Color.MAGENTA);
+                    embed.appendDescription("Forwarded " + args[1] + " in the current song.");
+                    event.getChannel().sendMessage(embed.build()).queue();
+
                 } else {
                     //Error, you can only set minute and second
                     EmbedBuilder embed = new EmbedBuilder();
