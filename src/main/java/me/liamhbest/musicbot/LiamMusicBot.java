@@ -33,6 +33,7 @@ public class LiamMusicBot {
     }
 
     public static void registerDiscordListeners(){
+        jda.addEventListener(new LoopCommand());
         jda.addEventListener(new StartCommand());
         jda.addEventListener(new StopCommand());
         jda.addEventListener(new PlayCommand());

@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class VolumeCommand extends ListenerAdapter {
 
+    public static int volume = 100;
+
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
         String command = "!volume";
@@ -18,7 +20,7 @@ public class VolumeCommand extends ListenerAdapter {
             if (!Utils.hasMusicBotPermission(event.getMember())) return;
 
             if (args.length > 1){
-                int volume = Integer.parseInt(args[1]);
+                volume = Integer.parseInt(args[1]);
                 event.getChannel().sendMessage(":loud_sound: Changed the volume from `" + PlayCommand.widePlayer.getVolume() + "` to `" + volume + "`.").queue();
                 PlayCommand.widePlayer.setVolume(volume);
             } else {

@@ -31,6 +31,7 @@ public class MusicHelpCommand extends ListenerAdapter {
             embed.appendDescription("**!setannouncechannel** - sets the channel where song will be announced"+newLine);
             embed.appendDescription("**!pause** - pause current song"+newLine);
             embed.appendDescription("**!resume** - resume a paused song"+newLine);
+            embed.appendDescription("**!loop [off/on]** - toggle loop mode on and off"+newLine);
             embed.appendDescription("**!volume** - view current volume"+newLine);
             embed.appendDescription("**!volume [value]** - set the music volume"+newLine);
             embed.appendDescription("**!forward [value][s/m]** - go forward in the song"+newLine);

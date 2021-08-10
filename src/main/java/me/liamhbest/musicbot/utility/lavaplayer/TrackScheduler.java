@@ -7,6 +7,9 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import me.liamhbest.musicbot.LiamMusicBot;
+import me.liamhbest.musicbot.commands.LoopCommand;
+import me.liamhbest.musicbot.commands.PlayCommand;
+import me.liamhbest.musicbot.commands.VolumeCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -52,6 +55,7 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
         // A track started playing
         queue.remove(track);
+        PlayCommand.widePlayer.setVolume(VolumeCommand.volume);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
         embed.setTitle(":loud_sound: Now Playing");
@@ -61,11 +65,18 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
             channel.sendMessage(embed.build()).queue();
             return;
         }
+
         LiamMusicBot.announcementChannel.sendMessage(embed.build()).queue();
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+        if (LoopCommand.shouldLoop) {
+            channel.sendMessage(":loop: Looping song...").queue();
+            PlayCommand.widePlayer.playTrack(track);
+            return;
+        }
+
         if (!queue.isEmpty()) {
             player.playTrack(queue.get(0));
         }
