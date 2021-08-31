@@ -2,6 +2,7 @@ package me.liamhbest.musicbot.commands;
 
 import me.liamhbest.musicbot.utility.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -31,7 +32,7 @@ public class MusicHelpCommand extends ListenerAdapter {
             embed.appendDescription("**!setannouncechannel** - sets the channel where song will be announced"+newLine);
             embed.appendDescription("**!pause** - pause current song"+newLine);
             embed.appendDescription("**!resume** - resume a paused song"+newLine);
-            embed.appendDescription("**!loop [off/on]** - toggle loop mode on and off"+newLine);
+            embed.appendDescription("**!loop** - toggle loop mode on and off"+newLine);
             embed.appendDescription("**!volume** - view current volume"+newLine);
             embed.appendDescription("**!volume [value]** - set the music volume"+newLine);
             embed.appendDescription("**!forward [value][s/m]** - go forward in the song"+newLine);
@@ -42,7 +43,14 @@ public class MusicHelpCommand extends ListenerAdapter {
             embed.appendDescription("**!start** - start the system and make the bot join your current voice channel"+newLine);
             embed.appendDescription("\n");
             embed.appendDescription("__Other Settings:__\n");
-            embed.appendDescription("**Bot Access Role:** <@&856141201190420480>");
+
+            for (Role role : event.getGuild().getRoles()){
+                if ((role.getName().contains("Music") || role.getName().contains("music"))
+                && (role.getName().contains("access") || role.getName().contains("Access"))) {
+                    embed.appendDescription("**Bot Access Role:** <@&" + role.getId() + ">");
+                    break;
+                }
+            }
 
             event.getChannel().sendMessage(embed.build()).queue();
         }

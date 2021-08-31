@@ -33,7 +33,6 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
 
     @Override
     public void onPlayerPause(AudioPlayer player) {
-        // Player was paused
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.MAGENTA);
         embed.setTitle(":stopwatch: Song Paused");
@@ -43,7 +42,6 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
 
     @Override
     public void onPlayerResume(AudioPlayer player) {
-        // Player was resumed
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.MAGENTA);
         embed.setTitle(":white_check_mark: Song Resumed");
@@ -53,8 +51,10 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
 
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
-        // A track started playing
-        queue.remove(track);
+        try {
+            queue.remove(track);
+        } catch (Exception ignored){ }
+
         PlayCommand.widePlayer.setVolume(VolumeCommand.volume);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
@@ -73,7 +73,8 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (LoopCommand.shouldLoop) {
             channel.sendMessage(":loop: Looping song...").queue();
-            PlayCommand.widePlayer.playTrack(track);
+            track.setPosition(0);
+            player.playTrack(track);
             return;
         }
 
@@ -81,21 +82,15 @@ public class TrackScheduler extends AudioEventAdapter implements AudioEventListe
             player.playTrack(queue.get(0));
         }
 
-        // endReason == FINISHED: A track finished or died by an exception (mayStartNext = true).
-        // endReason == LOAD_FAILED: Loading of a track failed (mayStartNext = true).
-        // endReason == STOPPED: The player was stopped.
-        // endReason == REPLACED: Another track started playing while this had not finished
-        // endReason == CLEANUP: Player hasn't been queried for a while, if you want you can put a
-        //                       clone of this back to your queue
     }
 
     @Override
     public void onTrackException(AudioPlayer player, AudioTrack track, FriendlyException exception) {
-        // An already playing track threw an exception (track end event will still be received separately)
+        //TODO Something went wrong with that track, starting a new one
     }
 
     @Override
     public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs) {
-        // Audio track has been unable to provide us any audio, might want to just start a new track
+        //TODO Something went wrong with that track, starting a new one
     }
 }

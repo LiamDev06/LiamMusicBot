@@ -1,10 +1,9 @@
 package me.liamhbest.musicbot.utility;
 
-import net.dv8tion.jda.api.entities.ChannelType;
+import me.liamhbest.musicbot.LiamMusicBot;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.internal.audio.ConnectionStage;
 
 public class Utils {
 
@@ -30,8 +29,9 @@ public class Utils {
 
     public static boolean hasMusicBotPermission(Member member){
         return hasRole(member, "Music Bot Access")
-                || member.getId().equalsIgnoreCase("392381841639997451")
-                || hasRole(member, "Metadata 12");
+                || hasRole(member, "Metadata 12")
+                || hasRole(member, "LiamMusicBot Access")
+                || LiamMusicBot.jda.getUserById(392381841639997451L).getName().equalsIgnoreCase("LiamHBest");
     }
 
 

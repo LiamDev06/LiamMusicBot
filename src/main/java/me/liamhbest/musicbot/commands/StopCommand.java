@@ -1,8 +1,6 @@
 package me.liamhbest.musicbot.commands;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import me.liamhbest.musicbot.utility.Utils;
-import me.liamhbest.musicbot.utility.lavaplayer.TrackScheduler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
